@@ -116,10 +116,12 @@ const text = {
     search: "ស្វែងរក...",
     logout: "ចាកចេញ",
     title: "ចំណងជើង",
+    khmerTitle: "ចំណងជើងខ្មែរ",
+    englishTitle: "ចំណងជើងអង់គ្លេស",
     year: "ឆ្នាំ",
     subject: "មុខវិជ្ជា",
     category: "ប្រភេទ",
-    url: "Google Drive URL",
+    url: "URL របស់ Google Drive",
     actions: "សកម្មភាព",
     empty: "រកមិនឃើញទិន្នន័យ",
     access: "អនុញ្ញាត Gmail",
@@ -139,6 +141,8 @@ const text = {
     search: "Search...",
     logout: "Sign out",
     title: "Title",
+    khmerTitle: "Khmer title",
+    englishTitle: "English title",
     year: "Year",
     subject: "Subject",
     category: "Category",
@@ -489,7 +493,7 @@ function App() {
               </select>
             </label>
             <label className="wide title-field">
-              Khmer title
+              {t.khmerTitle}
               <input
                 name="title"
                 value={form.title}
@@ -498,7 +502,7 @@ function App() {
               />
             </label>
             <label className="wide title-field">
-              English title
+              {t.englishTitle}
               <input
                 name="translated_title"
                 value={translatedTitle}
