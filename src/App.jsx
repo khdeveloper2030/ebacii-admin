@@ -164,7 +164,7 @@ function App() {
   const [editing, setEditing] = useState(false);
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
-  const [language, setLanguage] = useState("km");
+  const [language, setLanguage] = useState("en");
   const [translationDirection, setTranslationDirection] = useState("km-en");
   const [translating, setTranslating] = useState(false);
   const [translatedTitle, setTranslatedTitle] = useState("");
@@ -240,6 +240,9 @@ function App() {
     setForm({ ...form, [event.target.name]: event.target.value });
     if (event.target.name === "title") setTranslatedTitle("");
   }
+  function updateTranslatedTitle(event) {
+    setTranslatedTitle(event.target.value);
+  }
   function selectCategory(event) {
     const value = event.target.value;
     setCategory(value);
@@ -302,22 +305,24 @@ function App() {
     });
   }
   async function translateTitle(direction = translationDirection) {
-    if (!form.title.trim()) return;
+    const sourceTitle = form.title.trim();
+    if (!sourceTitle) return;
     setTranslating(true);
     setMessage("");
     try {
       const [source, target] = direction.split("-");
       const response = await fetch(
-        `https://api.mymemory.translated.net/get?q=${encodeURIComponent(form.title)}&langpair=${source}|${target}`,
+        `https://api.mymemory.translated.net/get?q=${encodeURIComponent(sourceTitle)}&langpair=${source}|${target}`,
       );
       const result = await response.json();
       const translated =
-        titleTranslations[form.title.trim()] ||
-        result.responseData?.translatedText;
+        titleTranslations[sourceTitle] || result.responseData?.translatedText;
       if (!translated) throw new Error("translation failed");
       skipAutoTranslation.current = true;
       setTranslatedTitle(translated);
-      setForm({ ...form, title: translated });
+      if (direction === "km-en") {
+        setForm((current) => ({ ...current, title: sourceTitle }));
+      }
       setMessage(
         language === "km"
           ? `បានបកប្រែ៖ ${translated}`
@@ -338,8 +343,12 @@ function App() {
     language === "en"
       ? translations[value] || categoryTranslations[value] || value
       : value;
-  const displayTitle = (paper) =>
-    language === "en" ? paper.translated_title || paper.title : paper.title;
+  const displayTitle = (paper) => {
+    if (!paper) return "";
+    const title = paper.title || "";
+    const translated = paper.translated_title || "";
+    return language === "en" ? translated || title : title;
+  };
   const toggleLanguage = (
     <button
       className="language-toggle"
@@ -520,6 +529,15 @@ function App() {
                   English → ខ្មែរ
                 </button>
               </div>
+            </label>
+            <label className="wide title-field">
+              English title
+              <input
+                name="translated_title"
+                value={translatedTitle}
+                onChange={updateTranslatedTitle}
+                placeholder="2022 Bac II Earth-Environment Examination"
+              />
             </label>
             <label>
               {t.year}
