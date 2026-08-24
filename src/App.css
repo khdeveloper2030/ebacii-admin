@@ -338,7 +338,7 @@ label select:focus {
 }
 table {
   width: 100%;
-  min-width: 700px;
+  min-width: 620px;
   border-collapse: collapse;
   table-layout: fixed;
   text-align: left;
@@ -365,8 +365,9 @@ td:nth-child(3) {
 }
 th,
 td {
-  padding: 16px 14px;
+  padding: 10px 12px;
   border-bottom: 1px solid var(--line);
+  vertical-align: middle;
 }
 td {
   font-size: 14px;
@@ -375,10 +376,18 @@ td strong,
 td small {
   display: block;
 }
+td strong {
+  line-height: 1.2;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 td small {
   color: var(--muted);
-  margin-top: 3px;
-  font-size: 12px;
+  margin-top: 2px;
+  font-size: 11px;
+  line-height: 1.2;
+  white-space: nowrap;
 }
 .tag {
   padding: 5px 8px;
@@ -397,8 +406,8 @@ td small {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 32px;
-  height: 32px;
+  width: 26px;
+  height: 26px;
   margin-left: 4px;
   border: 1px solid var(--line);
   background: transparent;
