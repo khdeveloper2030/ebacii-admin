@@ -284,6 +284,10 @@ function App() {
     setMessage(editing ? "បានកែប្រែទិន្នន័យ" : "បានបញ្ចូលទិន្នន័យ");
     clearForm();
   }
+  function viewPaper(url) {
+    if (!url) return;
+    window.open(url, "_blank", "noopener,noreferrer");
+  }
   async function removePaper(id) {
     if (window.confirm("តើអ្នកពិតជាចង់លុបវិញ្ញាសានេះមែនទេ?")) {
       await deleteDoc(doc(db, "exam_papers", id));
@@ -583,13 +587,23 @@ function App() {
                         href={paper.drive_url}
                         target="_blank"
                         rel="noreferrer"
+                        title="Open file"
                       >
                         ↗
                       </a>
-                      <button onClick={() => editPaper(paper)}>✎</button>
+                      <button onClick={() => editPaper(paper)} title="Edit record">
+                        ✎
+                      </button>
+                      <button
+                        onClick={() => viewPaper(paper.drive_url)}
+                        title="View file"
+                      >
+                        👁
+                      </button>
                       <button
                         className="danger"
                         onClick={() => removePaper(paper.id)}
+                        title="Delete record"
                       >
                         ×
                       </button>

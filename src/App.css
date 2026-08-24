@@ -390,6 +390,12 @@ td small {
   background: transparent;
   color: var(--teal);
   text-decoration: none;
+  cursor: pointer;
+}
+.actions button:hover,
+.actions a:hover {
+  border-color: var(--teal);
+  background: rgba(18, 120, 98, 0.04);
 }
 .actions .danger {
   color: var(--coral);
