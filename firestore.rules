@@ -1,0 +1,17 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function signedIn() { return request.auth != null; }
+    function accessDoc() { return get(/databases/$(database)/documents/allowed_users/$(request.auth.token.email)); }
+    function allowed() { return signedIn() && accessDoc().data.allowed == true; }
+    function admin() { return allowed() && accessDoc().data.role == 'admin'; }
+    match /exam_papers/{paperId} {
+      allow read: if allowed();
+      allow create, update, delete: if admin();
+    }
+    match /allowed_users/{email} {
+      allow read: if signedIn() && (request.auth.token.email == email || resource.data.email == request.auth.token.email);
+      allow read, create, update, delete: if admin();
+    }
+  }
+}
