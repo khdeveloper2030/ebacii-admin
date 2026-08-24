@@ -393,14 +393,12 @@ function App() {
           <h1>
             {language === "km" ? (
               <>
-                បណ្ណាល័យ
-                <br />
+                <span>បណ្ណាល័យ</span>
                 <em>វិញ្ញាសា</em>
               </>
             ) : (
               <>
-                Exam Paper
-                <br />
+                <span>Exam Paper</span>
                 <em>Library</em>
               </>
             )}
