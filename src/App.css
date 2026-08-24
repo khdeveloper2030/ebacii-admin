@@ -354,6 +354,7 @@ th {
 th:nth-child(1),
 td:nth-child(1) {
   width: 72%;
+  padding-left: 12px;
 }
 th:nth-child(2),
 td:nth-child(2) {
