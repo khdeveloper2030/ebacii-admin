@@ -353,19 +353,19 @@ th {
 }
 th:nth-child(1),
 td:nth-child(1) {
-  width: 62%;
+  width: 70%;
 }
 th:nth-child(2),
 td:nth-child(2) {
-  width: 10%;
+  width: 8%;
 }
 th:nth-child(3),
 td:nth-child(3) {
-  width: 18%;
+  width: 22%;
 }
 th,
 td {
-  padding: 10px 8px;
+  padding: 8px 4px;
   border-bottom: 1px solid var(--line);
   vertical-align: middle;
 }
