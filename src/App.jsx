@@ -390,16 +390,16 @@ function App() {
         <div className="login-panel">
           <div className="login-tools">{toggleLanguage}</div>
           <span className="kicker">EBACII · ADMIN PORTAL</span>
-          <h1>
+          <h1 className="brand-lockup">
             {language === "km" ? (
               <>
-                <span>បណ្ណាល័យ</span>
-                <em>វិញ្ញាសា</em>
+                <span className="brand-primary">បណ្ណាល័យ</span>
+                <span className="brand-secondary">វិញ្ញាសា</span>
               </>
             ) : (
               <>
-                <span>Exam Paper</span>
-                <em>Library</em>
+                <span className="brand-primary">Exam Paper</span>
+                <span className="brand-secondary">Library</span>
               </>
             )}
           </h1>
