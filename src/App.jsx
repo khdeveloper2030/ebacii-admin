@@ -489,46 +489,13 @@ function App() {
               </select>
             </label>
             <label className="wide title-field">
-              {t.title}
-              <div className="title-input">
-                <input
-                  name="title"
-                  value={form.title}
-                  onChange={update}
-                  required
-                />
-                <button
-                  type="button"
-                  onClick={() => translateTitle()}
-                  disabled={translating || !form.title.trim()}
-                >
-                  {translating ? "..." : "បកប្រែ / Translate"}
-                </button>
-              </div>
-              <div className="translation-options">
-                <button
-                  type="button"
-                  className={translationDirection === "km-en" ? "selected" : ""}
-                  onClick={() => {
-                    setTranslationDirection("km-en");
-                    translateTitle("km-en");
-                  }}
-                  disabled={translating || !form.title.trim()}
-                >
-                  ខ្មែរ → English
-                </button>
-                <button
-                  type="button"
-                  className={translationDirection === "en-km" ? "selected" : ""}
-                  onClick={() => {
-                    setTranslationDirection("en-km");
-                    translateTitle("en-km");
-                  }}
-                  disabled={translating || !form.title.trim()}
-                >
-                  English → ខ្មែរ
-                </button>
-              </div>
+              Khmer title
+              <input
+                name="title"
+                value={form.title}
+                onChange={update}
+                required
+              />
             </label>
             <label className="wide title-field">
               English title
