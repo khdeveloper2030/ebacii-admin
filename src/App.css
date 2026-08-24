@@ -353,15 +353,15 @@ th {
 }
 th:nth-child(1),
 td:nth-child(1) {
-  width: 58%;
+  width: 60%;
 }
 th:nth-child(2),
 td:nth-child(2) {
-  width: 18%;
+  width: 12%;
 }
 th:nth-child(3),
 td:nth-child(3) {
-  width: 24%;
+  width: 28%;
 }
 th,
 td {
@@ -406,9 +406,9 @@ td small {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 26px;
-  height: 26px;
-  margin-left: 4px;
+  width: 24px;
+  height: 24px;
+  margin-left: 3px;
   border: 1px solid var(--line);
   background: transparent;
   color: var(--teal);
