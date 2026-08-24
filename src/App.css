@@ -338,8 +338,9 @@ label select:focus {
 }
 table {
   width: 100%;
-  min-width: 590px;
+  min-width: 700px;
   border-collapse: collapse;
+  table-layout: fixed;
   text-align: left;
 }
 th {
@@ -349,6 +350,18 @@ th {
     sans-serif;
   letter-spacing: 0.8px;
   text-transform: uppercase;
+}
+th:nth-child(1),
+td:nth-child(1) {
+  width: 58%;
+}
+th:nth-child(2),
+td:nth-child(2) {
+  width: 18%;
+}
+th:nth-child(3),
+td:nth-child(3) {
+  width: 24%;
 }
 th,
 td {
@@ -377,14 +390,15 @@ td small {
 }
 .actions {
   white-space: nowrap;
+  text-align: right;
 }
 .actions a,
 .actions button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 28px;
-  height: 28px;
+  width: 32px;
+  height: 32px;
   margin-left: 4px;
   border: 1px solid var(--line);
   background: transparent;
