@@ -169,10 +169,7 @@ function App() {
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
   const [language, setLanguage] = useState("en");
-  const [translationDirection, setTranslationDirection] = useState("km-en");
-  const [translating, setTranslating] = useState(false);
   const [translatedTitle, setTranslatedTitle] = useState("");
-  const skipAutoTranslation = useRef(false);
 
   useEffect(() => {
     if (!auth) {
@@ -206,15 +203,6 @@ function App() {
   useEffect(() => {
     if (role) return subscribeData();
   }, [role]);
-  useEffect(() => {
-    if (!role || form.title.trim().length < 3) return undefined;
-    if (skipAutoTranslation.current) {
-      skipAutoTranslation.current = false;
-      return undefined;
-    }
-    const timer = setTimeout(() => translateTitle(translationDirection), 900);
-    return () => clearTimeout(timer);
-  }, [form.title, translationDirection, role]);
   useEffect(() => {
     setPage(1);
   }, [category, subject, search]);
@@ -275,7 +263,7 @@ function App() {
       ...(translatedTitle
         ? {
             translated_title: translatedTitle,
-            translated_title_language: translationDirection.split("-")[1],
+            translated_title_language: "en",
           }
         : {}),
     };
@@ -307,40 +295,6 @@ function App() {
       allowed: !item.allowed,
       email: item.email.toLowerCase(),
     });
-  }
-  async function translateTitle(direction = translationDirection) {
-    const sourceTitle = form.title.trim();
-    if (!sourceTitle) return;
-    setTranslating(true);
-    setMessage("");
-    try {
-      const [source, target] = direction.split("-");
-      const response = await fetch(
-        `https://api.mymemory.translated.net/get?q=${encodeURIComponent(sourceTitle)}&langpair=${source}|${target}`,
-      );
-      const result = await response.json();
-      const translated =
-        titleTranslations[sourceTitle] || result.responseData?.translatedText;
-      if (!translated) throw new Error("translation failed");
-      skipAutoTranslation.current = true;
-      setTranslatedTitle(translated);
-      if (direction === "km-en") {
-        setForm((current) => ({ ...current, title: sourceTitle }));
-      }
-      setMessage(
-        language === "km"
-          ? `បានបកប្រែ៖ ${translated}`
-          : `Translated: ${translated}`,
-      );
-    } catch {
-      setMessage(
-        language === "km"
-          ? "មិនអាចបកប្រែបានទេ សូមពិនិត្យ Internet"
-          : "Translation failed. Check your internet connection.",
-      );
-    } finally {
-      setTranslating(false);
-    }
   }
   const t = text[language];
   const translate = (value) =>
@@ -497,6 +451,8 @@ function App() {
                 value={form.title}
                 onChange={update}
                 required
+                lang="km"
+                translate="no"
               />
             </label>
             <label className="wide title-field">
@@ -506,6 +462,8 @@ function App() {
                 value={translatedTitle}
                 onChange={updateTranslatedTitle}
                 placeholder="2022 Bac II Earth-Environment Examination"
+                lang="en"
+                translate="no"
               />
             </label>
             <label>
@@ -538,9 +496,7 @@ function App() {
           <div className="records-heading">
             <div>
               <span className="kicker">{translate(category)}</span>
-              <h2>
-                {t.list} <b>{visible.length}</b>
-              </h2>
+              <h2>{t.list}</h2>
             </div>
           </div>
           <div className="tabs">
