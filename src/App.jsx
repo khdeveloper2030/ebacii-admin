@@ -231,7 +231,6 @@ function App() {
   }
   function update(event) {
     setForm({ ...form, [event.target.name]: event.target.value });
-    if (event.target.name === "title") setTranslatedTitle("");
   }
   function updateTranslatedTitle(event) {
     setTranslatedTitle(event.target.value);
