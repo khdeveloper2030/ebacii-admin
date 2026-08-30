@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { getDisplayTitle } from "./titleUtils.js";
 import { onAuthStateChanged, signInWithPopup, signOut } from "firebase/auth";
 import {
   addDoc,
@@ -301,12 +302,7 @@ function App() {
     language === "en"
       ? translations[value] || categoryTranslations[value] || value
       : value;
-  const displayTitle = (paper) => {
-    if (!paper) return "";
-    const title = paper.title || "";
-    const translated = paper.translated_title || "";
-    return language === "en" ? translated || title : title;
-  };
+  const displayTitle = (paper) => getDisplayTitle(paper, language);
   const toggleLanguage = (
     <button
       className="language-toggle"
@@ -461,7 +457,7 @@ function App() {
                 name="translated_title"
                 value={translatedTitle}
                 onChange={updateTranslatedTitle}
-                placeholder="2022 Bac II Earth-Environment Examination"
+                placeholder="2022 Bac II Khmer Literature Examination"
                 lang="en"
                 translate="no"
               />
