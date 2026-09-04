@@ -267,7 +267,7 @@ function App() {
     const values = {
       category: form.category,
       subject: form.subject,
-      drive_url: cleanedDriveId,
+      drive_url: formatDriveDownloadUrl(cleanedDriveId),
       title: form.title,
       year: Number(form.year),
       ...(translatedTitle
@@ -298,6 +298,22 @@ function App() {
     });
     setEmail("");
     setMessage("បានអនុញ្ញាត Gmail");
+  }
+  async function migrateDriveLinks() {
+    if (!db) return;
+    const snapshot = await getDocs(collection(db, "exam_papers"));
+    await Promise.all(
+      snapshot.docs.map(async (paperDoc) => {
+        const paper = paperDoc.data();
+        const nextUrl = formatDriveDownloadUrl(paper.drive_url || "");
+        if (!paper.drive_url || nextUrl === paper.drive_url) return;
+        await setDoc(
+          doc(db, "exam_papers", paperDoc.id),
+          { ...paper, drive_url: nextUrl },
+        );
+      }),
+    );
+    setMessage("បានកែប្រែ Google Drive URL របស់វិញ្ញាសាទាំងអស់");
   }
   async function revokeEmail(item) {
     await setDoc(doc(db, "allowed_users", item.id), {
@@ -595,6 +611,9 @@ function App() {
               {t.addUser} <span>+</span>
             </button>
           </form>
+          <button type="button" className="quiet" onClick={migrateDriveLinks}>
+            Fix old Google Drive URLs
+          </button>
           <ul>
             {allowedUsers.map((item) => (
               <li key={item.id}>

@@ -27,3 +27,8 @@ test('drive file ids are rendered as complete download URLs in the UI', () => {
     'https://drive.google.com/uc?export=download&id=16YZWrK4Ye9-M1lC6WjNrkKJ5G-A2J7-r',
   );
 });
+
+test('saved data keeps the full Google Drive URL for mobile clients', () => {
+  const fullUrl = formatDriveDownloadUrl('16YZWrK4Ye9-M1lC6WjNrkKJ5G-A2J7-r');
+  assert.equal(fullUrl, 'https://drive.google.com/uc?export=download&id=16YZWrK4Ye9-M1lC6WjNrkKJ5G-A2J7-r');
+});
