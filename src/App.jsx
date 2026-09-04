@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { getDisplayTitle } from "./titleUtils.js";
+import { formatDriveDownloadUrl, normalizeDriveFileId } from "./driveUtils.js";
 import { onAuthStateChanged, signInWithPopup, signOut } from "firebase/auth";
 import {
   addDoc,
@@ -230,8 +231,16 @@ function App() {
     if (auth) await signInWithPopup(auth, googleProvider);
   }
   function update(event) {
-    setForm({ ...form, [event.target.name]: event.target.value });
+    const { name, value } = event.target;
+    if (name === "drive_url") {
+      setForm({ ...form, [name]: normalizeDriveFileId(value) });
+      return;
+    }
+    setForm({ ...form, [name]: value });
   }
+  const driveInputValue = form.drive_url
+    ? formatDriveDownloadUrl(form.drive_url)
+    : "";
   function updateTranslatedTitle(event) {
     setTranslatedTitle(event.target.value);
   }
@@ -254,10 +263,11 @@ function App() {
   }
   async function savePaper(event) {
     event.preventDefault();
+    const cleanedDriveId = normalizeDriveFileId(form.drive_url);
     const values = {
       category: form.category,
       subject: form.subject,
-      drive_url: form.drive_url,
+      drive_url: cleanedDriveId,
       title: form.title,
       year: Number(form.year),
       ...(translatedTitle
@@ -475,9 +485,10 @@ function App() {
               {t.url}
               <input
                 name="drive_url"
-                type="url"
-                value={form.drive_url}
+                type="text"
+                value={driveInputValue}
                 onChange={update}
+                placeholder="https://drive.google.com/uc?export=download&id=16YZWrK4Ye9-M1lC6WjNrkKJ5G-A2J7-r"
                 required
               />
             </label>
@@ -531,7 +542,7 @@ function App() {
                     <td>{paper.year}</td>
                     <td className="actions">
                       <a
-                        href={paper.drive_url}
+                        href={formatDriveDownloadUrl(paper.drive_url)}
                         target="_blank"
                         rel="noreferrer"
                         title="Open file"
