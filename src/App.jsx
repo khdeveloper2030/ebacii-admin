@@ -248,7 +248,10 @@ function App() {
     setForm({ ...form, category: value, subject: subjects[value][0] });
   }
   function editPaper(paper) {
-    setForm(paper);
+    setForm({
+      ...paper,
+      drive_url: normalizeDriveFileId(paper.drive_url),
+    });
     setTranslatedTitle(paper.translated_title || "");
     setEditing(true);
     window.scrollTo({ top: 0, behavior: "smooth" });
