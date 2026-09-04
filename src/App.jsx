@@ -238,9 +238,6 @@ function App() {
     }
     setForm({ ...form, [name]: value });
   }
-  const driveInputValue = form.drive_url
-    ? formatDriveDownloadUrl(form.drive_url)
-    : "";
   function updateTranslatedTitle(event) {
     setTranslatedTitle(event.target.value);
   }
@@ -486,9 +483,9 @@ function App() {
               <input
                 name="drive_url"
                 type="text"
-                value={driveInputValue}
+                value={form.drive_url}
                 onChange={update}
-                placeholder="https://drive.google.com/uc?export=download&id=16YZWrK4Ye9-M1lC6WjNrkKJ5G-A2J7-r"
+                placeholder="16YZWrK4Ye9-M1lC6WjNrkKJ5G-A2J7-r"
                 required
               />
             </label>
