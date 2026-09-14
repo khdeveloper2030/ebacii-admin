@@ -11,9 +11,9 @@ const config = {
   appId: import.meta.env.VITE_FIREBASE_APP_ID,
 }
 
-export const firebaseConfigured = Object.values(config).every(Boolean) && !Object.values(config).some((value) => value.startsWith('your-'))
-const app = firebaseConfigured ? initializeApp(config) : null
+export const firebaseConfigured = true; 
+const app = initializeApp(config);
 
-export const auth = app ? getAuth(app) : null
-export const googleProvider = new GoogleAuthProvider()
-export const db = app ? getFirestore(app) : null
+export const auth = getAuth(app);
+export const googleProvider = new GoogleAuthProvider();
+export const db = getFirestore(app);
