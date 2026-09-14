@@ -258,7 +258,7 @@ export default function ExamPapers({ papers, language, t }) {
                   }}>
                     {Object.keys(subjects).map((item) => (
                       <option key={item} value={item}>{translate(item)}</option>
-                    ))}
+                    ))}     
                   </select>
                 </label>
                 <label>
