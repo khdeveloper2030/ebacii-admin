@@ -5,7 +5,6 @@ import App from './App.jsx'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-      <h1>HELLO VERCEL TEST</h1>
     <App />
   
   </StrictMode>,
